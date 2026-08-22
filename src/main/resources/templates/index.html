@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Artemis Financial</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4f46e5;
+        }
+        button, .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #4f46e5;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        button:hover, .btn:hover {
+            background: #4338ca;
+        }
+        form {
+            width: 30rem;
+            margin: auto;
+        }
+        .result div {
+            margin: 3rem auto;
+        }
+        .error {
+            margin: 1rem auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div style="text-align: center; margin: 10rem auto;">
+    <img th:src="@{/images/Artemis Financial.png}" alt="Artemis Financial" style="width: 400px;">
+    <h2>Welcome, <span th:text="${user}"></span>!</h2>
+    <form th:action="@{/hash}" method="post" th:if="${hash == null}">
+        <input type="text"
+               name="data"
+               placeholder="Enter a string to hash."
+               th:value="${originalData}"
+               autocomplete="off"
+               required>
+        <button type="submit">Generate Hash</button>
+    </form>
+
+    <!-- Error message block that renders in the case that "errorMessage" is returned -->
+    <div class="error" th:if="${errorMessage}">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <!-- This div renders only once Thymeleaf has returned the hash attribute -->
+    <div class="result" th:if="${hash}">
+        <div>
+            <h3>Name:</h3>
+            <span th:text="${user}"></span>
+            <h3>Hash Value: </h3>
+            <span th:text="${hash}"></span>
+        </div>
+        <a th:href="@{/}" class="btn">&larr; Go Back</a>
+    </div>
+</div>
+</body>
+</html>
